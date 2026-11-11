@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { ExternalLink, Github, Layers, ArrowUpRight, Globe, Compass } from 'lucide-react'
+import { ExternalLink, Github, Layers, ArrowUpRight, Globe, Cpu } from 'lucide-react'
 import { SiFigma } from 'react-icons/si'
 
 /**
@@ -78,34 +78,39 @@ export const PROJECTS_DATA = [
     visualType: 'portfolio',
   },
   {
-    id: 'task-orchestrator',
-    title: 'Distributed Async Task Orchestrator',
-    badge: 'TASK ORCHESTRATOR 2025',
-    year: '2025',
-    category: 'Distributed Systems & Backend',
+    id: 'smartcampus-uiux',
+    title: 'SmartCampus — Eco-Monitor & IoT Facility Management Platform',
+    badge: 'SMARTCAMPUS 2026',
+    year: '2026',
+    category: 'UI/UX DESIGN / IOT MONITORING',
     icon: Layers,
-    stats: '10K req/sec • Sub-ms Queue Dispatch',
-    description: 'Fault-tolerant distributed task worker engine providing priority queueing, dead-letter redrive, automated worker backpressure, and live telemetry WebSocket broadcasting.',
-    tags: ['Go', 'gRPC', 'Redis', 'PostgreSQL', 'Docker'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
-    featured: false,
-    visualType: 'backend',
+    stats: 'IOT ENERGY TELEMETRY • FACILITY ALERTS',
+    description: 'Rancangan antarmuka dashboard monitoring IoT untuk pemantauan penggunaan energi dan fasilitas gedung kampus (AC, sistem pencahayaan) secara real-time, memberi pembaruan status dan notifikasi efisiensi daya saat ruang kelas kosong.',
+    tags: ['FIGMA', 'UI/UX DESIGN', 'IOT DASHBOARD', 'ENERGY MONITORING', 'PROTOTYPING'],
+    imageSrc: '/smartcampus-preview.png',
+    githubUrl: 'https://www.figma.com/design/y3vRByEbZ4wbh6dKIXDhhw/SmartCampus?node-id=0-1&t=njJnruqXP6xMRdx6-1',
+    liveUrl: 'https://www.figma.com/design/y3vRByEbZ4wbh6dKIXDhhw/SmartCampus?node-id=0-1&t=njJnruqXP6xMRdx6-1',
+    repoLabel: 'INSPECT DESIGN',
+    liveLabel: 'VIEW FIGMA',
+    repoType: 'figma',
+    featured: true,
+    visualType: 'portfolio',
   },
   {
-    id: 'drone-telemetry',
-    title: 'Autonomous Drone Flight Telemetry Visualizer',
-    badge: 'AERO TELEMETRY 2025',
-    year: '2025',
-    category: 'Real-Time Telemetry & WebGL',
-    icon: Compass,
-    stats: 'MQTT Pub/Sub • 3D Spatial Vectoring',
-    description: 'Real-time telemetry ground control station rendering 3D drone spatial attitude (pitch/roll/yaw), battery consumption gradient, and automated waypoint tracking coordinates.',
-    tags: ['Node.js', 'Three.js', 'MQTT', 'WebSockets', 'Tailwind'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
-    featured: false,
-    visualType: 'drone',
+    id: 'sinapsis-ai',
+    title: 'SINAPSIS — AI Traffic Intersection Control & Monitoring System',
+    badge: 'SINAPSIS 2026',
+    year: '2026',
+    category: 'FULL-STACK / AI & COMPUTER VISION',
+    icon: Cpu,
+    stats: 'YOLOV8 DETECTION • EMERGENCY PRIORITY',
+    description: 'Sistem manajemen persimpangan lampu lalu lintas cerdas berbasis AI untuk Dinas Perhubungan (Dishub) guna mengoptimalkan durasi sinyal secara efisien serta memprioritaskan respon darurat armada ambulan dan pemadam kebakaran secara real-time.',
+    tags: ['FASTAPI', 'PYTHON', 'YOLOV8', 'WEBSOCKETS', 'REACT', 'TAILWIND CSS'],
+    imageSrc: '/sinapsis-preview.jpg',
+    githubUrl: 'https://github.com/AgilePemdigi-2026/SINAPSIS_K05',
+    liveUrl: 'https://sinapsis.caiis.ai.id/',
+    featured: true,
+    visualType: 'vision',
   },
 ]
 
@@ -294,15 +299,15 @@ export default function ProjectsSection({
   const subScale   = useTransform(smooth, [0.09, 0.22, 0.74, 0.90], [0.92, 1.0, 1.0, 0.80])
   const subY       = useTransform(smooth, [0.09, 0.24, 0.90],       [28, 0, -28])
 
-  const categories = ['ALL', 'FULL-STACK', 'FRONTEND', 'UI/UX DESIGN', 'BACKEND']
+  const categories = ['ALL', 'FULL-STACK', 'AI & VISION', 'FRONTEND', 'UI/UX DESIGN']
 
   const filteredProjects = projects.filter((item) => {
     const cat = item.category.toLowerCase()
     if (filter === 'ALL') return true
     if (filter === 'FULL-STACK') return cat.includes('full-stack')
+    if (filter === 'AI & VISION') return cat.includes('ai') || cat.includes('vision')
     if (filter === 'FRONTEND') return cat.includes('frontend') || cat.includes('interactive')
     if (filter === 'UI/UX DESIGN') return cat.includes('ui/ux') || cat.includes('design')
-    if (filter === 'BACKEND') return cat.includes('backend') || cat.includes('distributed') || cat.includes('full-stack') || cat.includes('telemetry')
     return true
   })
 
@@ -426,12 +431,6 @@ export default function ProjectsSection({
                 {/* Visual Preview / Screenshot */}
                 <div className="relative w-full h-56 sm:h-64 overflow-hidden bg-neutral-950 border-b border-neutral-800/80">
                   
-                  {/* Subtle Corner Telemetry Index */}
-                  <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-2.5 py-1 rounded-full bg-neutral-950/75 border border-neutral-800/80 backdrop-blur-sm font-mono text-[9px] tracking-widest text-neutral-300 uppercase pointer-events-none select-none">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shadow-[0_0_6px_#00ff9d]" />
-                    <span>REF // 0{idx + 1}</span>
-                  </div>
-
                   {/* Top-Right Quick External Action (Live Demo / Repo) */}
                   <a 
                     href={project.liveUrl || project.githubUrl} 
@@ -493,7 +492,7 @@ export default function ProjectsSection({
                     </h3>
 
                     {/* Project Description */}
-                    <p className="mt-3 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed line-clamp-4">
+                    <p className="mt-3 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
                       {project.description}
                     </p>
                   </div>
