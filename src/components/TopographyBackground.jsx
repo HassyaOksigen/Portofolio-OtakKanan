@@ -18,10 +18,6 @@ export default function TopographyBackground({ mousePosition = { x: 0, y: 0 } })
       }}
       aria-hidden="true"
     >
-      {/* Background off-white base with subtle grain/gradient */}
-      <div className="absolute inset-0 bg-[#F5F4F0]" />
-      <div className="absolute inset-0 bg-noise opacity-50" />
-
       {/* Subtle radial spotlight following mouse */}
       <div 
         className="absolute inset-0 opacity-40 transition-opacity duration-300"
