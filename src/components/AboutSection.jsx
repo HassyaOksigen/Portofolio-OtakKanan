@@ -1,27 +1,17 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 /**
  * AboutSection Component
  * Inspired by landonorris.com transition & quote section:
  * 1. Giant Running Text / Marquee Background moving horizontally in background
- * 2. Centerpiece: Frameless Floating Signature (/signature.png with electric neon green #00ff9d glow)
- * 3. High-Fashion Editorial Quote & Bio Narrative
- *
- * SCROLL-DRIVEN FOCUS ANIMATION:
- * - Quote & subquote menggunakan scroll-driven opacity/scale/y agar terasa "fokus saat dibaca"
- *   dan menghilang secara alami saat pengguna scroll meninggalkan section.
+ * 2. Editorial Quote + Sub-description dengan scroll-driven focus animation
+ * 3. Mini Code Terminal Snippet Card (developer.config.js) & Bio Narrative
  */
 export default function AboutSection({
-  signatureSrc = "/signature.png",
-  quote = "ENGINEERED FOR VELOCITY. BUILT FOR SCALE.",
-  subquote = "Turning complex backend architecture into seamless, high-impact digital experiences.",
-  name = "HASSYA",
-  role = "Full-Stack / Backend Engineer",
-  location = "Indonesia",
-  semester = "Semester 5",
+  quote = "DESIGNED WITH PRECISION. BUILT FOR PERFORMANCE.",
+  subquote = "Crafting robust backend architectures, real-time data pipelines, and seamless web applications.",
 }) {
-  const [sigImgError, setSigImgError] = useState(false)
   const sectionRef = useRef(null)
 
   // ─── SCROLL TRACKING ────────────────────────────────────────────────────────
@@ -40,11 +30,6 @@ export default function AboutSection({
   })
 
   // ─── SCROLL-DRIVEN FOCUS ANIMATION: QUOTE HEADING ───────────────────────────
-  // Skema progress:
-  //  0.00 → 0.12 : Section masuk dari bawah (tersembunyi)
-  //  0.12 → 0.30 : Zoom-in & fade-in ke posisi fokus penuh
-  //  0.30 → 0.65 : Diam di fokus (pembaca membaca teks)
-  //  0.65 → 0.82 : Mulai mengecil & memudar saat scroll ke atas menuju Projects
   const quoteOpacity = useTransform(smooth, [0.08, 0.26, 0.60, 0.80], [0, 1, 1, 0])
   const quoteScale   = useTransform(smooth, [0.08, 0.26, 0.60, 0.80], [0.90, 1.0, 1.0, 0.78])
   const quoteY       = useTransform(smooth, [0.08, 0.30, 0.80],       [38, 0, -32])
@@ -54,19 +39,13 @@ export default function AboutSection({
   const subScale   = useTransform(smooth, [0.14, 0.32, 0.62, 0.82], [0.92, 1.0, 1.0, 0.80])
   const subY       = useTransform(smooth, [0.14, 0.34, 0.82],       [28, 0, -28])
 
-  // ─── SIGNATURE PARALLAX ─────────────────────────────────────────────────────
-  // Gunakan spring terpisah dari offset ["start end", "center center"] agar signature
-  // tetap menggunakan scroll tracking aslinya dari atas (fade-in saat masuk saja)
-  const { scrollYProgress: sigProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "center center"],
-  })
-  const sigSmooth = useSpring(sigProgress, { damping: 28, stiffness: 180, mass: 0.5 })
-  const signatureOpacity = useTransform(sigSmooth, [0.2, 0.85], [0.15, 1.0])
-  const signatureScale   = useTransform(sigSmooth, [0.2, 0.85], [0.85, 1.05])
-
   // ─── MARQUEE SCROLL SCRUB ───────────────────────────────────────────────────
   const marqueeScrollX = useTransform(smooth, [0, 1], ['0%', '-15%'])
+
+  // Pecah quote per kalimat menjadi 2 baris eksplisit (misal: Baris 1 & Baris 2)
+  const quoteLines = typeof quote === 'string'
+    ? quote.replace(/\.\s+/g, '.\n').split('\n').filter(Boolean)
+    : [quote]
 
   return (
     <section 
@@ -119,7 +98,7 @@ export default function AboutSection({
       />
 
       {/* 2. CENTERPIECE: EDITORIAL QUOTE + SIGNATURE SHOWCASE FRAME */}
-      <div className="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center justify-center text-center">
         
         {/* ─── SCROLL-DRIVEN FOCUS: QUOTE SUPER-HEADING ──────────────────────────
             Dibungkus motion.div dengan style berisi nilai scroll-driven transforms.
@@ -131,10 +110,14 @@ export default function AboutSection({
             y: quoteY,
             transformOrigin: 'center center',
           }}
-          className="will-change-transform w-full"
+          className="will-change-transform w-full max-w-5xl mx-auto flex justify-center mb-6"
         >
-          <h2 className="font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter uppercase text-white leading-[1.05] max-w-4xl mx-auto">
-            {quote}
+          <h2 className="font-display font-black text-[length:clamp(1rem,4.3vw,1.5rem)] sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter uppercase text-white leading-[1.15] max-w-5xl mx-auto text-center">
+            {quoteLines.map((line, index) => (
+              <span key={index} className="block whitespace-nowrap">
+                {line}
+              </span>
+            ))}
           </h2>
         </motion.div>
 
@@ -146,57 +129,58 @@ export default function AboutSection({
             y: subY,
             transformOrigin: 'center center',
           }}
-          className="will-change-transform w-full mt-5"
+          className="will-change-transform w-full flex justify-center"
         >
-          <p className="text-base sm:text-xl text-neutral-400 font-sans font-light max-w-2xl leading-relaxed mx-auto">
+          <p className="text-base sm:text-xl text-neutral-400 font-sans font-light max-w-2xl leading-relaxed mx-auto text-center">
             {subquote}
           </p>
         </motion.div>
 
-        {/* CENTERPIECE: FRAMELESS FLOATING SIGNATURE (MELAYANG DI TENGAH TANPA BINGKAI/KOTAK) */}
-        <div className="relative my-8 sm:my-12 flex flex-col items-center justify-center w-full">
-          {/* Signature Graphic: Centered, Frameless, and Glowing Neon Green */}
-          <motion.div 
-            style={{
-              opacity: signatureOpacity,
-              scale: signatureScale,
-            }}
-            className="relative flex items-center justify-center pointer-events-none z-10"
-          >
-            {!sigImgError ? (
-              <img 
-                src={signatureSrc}
-                alt={`${name} Signature`}
-                onError={() => setSigImgError(true)}
-                className="w-64 sm:w-80 md:w-96 lg:w-[26rem] max-w-[85vw] h-auto object-contain filter drop-shadow-[0_0_20px_rgba(0,255,157,0.9)] drop-shadow-[0_0_50px_rgba(0,255,157,0.5)] transition-transform duration-500 hover:scale-105 pointer-events-auto select-none"
-              />
-            ) : (
-              /* Animated SVG Stroke Draw Signature Fallback */
-              <svg 
-                className="w-64 sm:w-80 md:w-96 lg:w-[26rem] max-w-[85vw] h-auto text-[#00ff9d] filter drop-shadow-[0_0_20px_rgba(0,255,157,0.85)] drop-shadow-[0_0_45px_rgba(0,255,157,0.45)] select-none pointer-events-auto"
-                viewBox="0 0 500 200" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <motion.path 
-                  d="M 50 140 C 70 40, 80 30, 90 40 C 95 160, 85 180, 75 160 C 100 90, 130 80, 150 150 M 170 120 C 190 100, 210 120, 200 145 C 180 150, 175 125, 210 115 M 230 110 C 250 100, 245 130, 255 145 M 275 110 C 295 100, 290 130, 300 145 M 320 115 C 335 140, 345 115, 350 160 C 345 190, 320 200, 300 175 C 360 145, 390 145, 410 120 M 60 185 C 200 190, 350 185, 450 165" 
-                  stroke="#00ff9d" 
-                  strokeWidth="4" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.6, ease: 'easeInOut' }}
-                />
-              </svg>
-            )}
-          </motion.div>
+        {/* CENTERPIECE: MINI CODE TERMINAL SNIPPET CARD */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="mt-10 sm:mt-12 bg-neutral-900/90 border border-neutral-800 rounded-xl p-4 text-left font-mono text-xs sm:text-sm shadow-xl max-w-md w-full mx-auto mb-8 interactive-card hover:border-emerald-500/40 transition-colors duration-300"
+        >
+          {/* Terminal Window Header */}
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-800/80">
+            <div className="flex items-center gap-1.5" aria-hidden="true">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+            </div>
+            <span className="text-[11px] text-neutral-500 tracking-wide">
+              developer.config.js
+            </span>
+          </div>
 
-          {/* Minimalist Author Tag */}
-          <span className="mt-3 font-mono text-[11px] tracking-[0.25em] uppercase text-neutral-400 select-none">
-            {name} — {role}
-          </span>
-        </div>
+          {/* Syntax-Highlighted Config Snippet */}
+          <pre className="overflow-x-auto leading-relaxed">
+            <code>
+              <span className="text-neutral-400">const </span>
+              <span className="text-white font-semibold">developer</span>
+              <span className="text-neutral-400"> = {'{\n'}</span>
+              <span className="text-neutral-100">  name</span>
+              <span className="text-neutral-400">: </span>
+              <span className="text-emerald-400">&quot;Hassya&quot;</span>
+              <span className="text-neutral-400">{',\n'}</span>
+              <span className="text-neutral-100">  role</span>
+              <span className="text-neutral-400">: </span>
+              <span className="text-emerald-400">&quot;Full-Stack&quot;</span>
+              <span className="text-neutral-400">{',\n'}</span>
+              <span className="text-neutral-100">  focus</span>
+              <span className="text-neutral-400">: [</span>
+              <span className="text-emerald-400">&quot;Scalable APIs&quot;</span>
+              <span className="text-neutral-400">, </span>
+              <span className="text-emerald-400">&quot;Data Intelligence&quot;</span>
+              <span className="text-neutral-400">, </span>
+              <span className="text-emerald-400">&quot;Python&quot;</span>
+              <span className="text-neutral-400">{']\n};'}</span>
+            </code>
+          </pre>
+        </motion.div>
 
         {/* Narrative Bio Paragraph */}
         <motion.div 
@@ -204,11 +188,10 @@ export default function AboutSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-8 sm:mt-10 text-sm sm:text-base text-neutral-300 font-sans max-w-2xl leading-relaxed text-center sm:text-left bg-neutral-950/70 border border-neutral-800 p-6 backdrop-blur-md"
+          className="text-sm sm:text-base text-neutral-300 font-sans max-w-2xl w-full leading-relaxed text-center mx-auto bg-neutral-950/70 border border-neutral-800 rounded-xl p-6 backdrop-blur-md"
         >
           <p>
-            I am a <strong className="text-white font-semibold">{semester}</strong> Software Engineering student from <strong className="text-white font-semibold">{location}</strong>. 
-            Inspired by the high-velocity precision of motorsport telemetry and clean structural engineering, I build resilient backend microservices, real-time data pipelines, and responsive digital interfaces with relentless focus on speed, scalability, and code clarity.
+            Full-stack and backend engineering student passionate about performance-driven systems. I bridge scalable server architecture, edge vehicle detection models, and data intelligence platforms into reliable, high-impact digital solutions.
           </p>
         </motion.div>
       </div>

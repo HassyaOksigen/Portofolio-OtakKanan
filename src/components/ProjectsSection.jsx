@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { ExternalLink, Github, Layers, ArrowUpRight, Cpu, BarChart3, Database, Globe, Compass } from 'lucide-react'
+import { ExternalLink, Github, Layers, ArrowUpRight, Globe, Compass } from 'lucide-react'
+import { SiFigma } from 'react-icons/si'
 
 /**
  * ============================================================================
@@ -10,62 +11,69 @@ import { ExternalLink, Github, Layers, ArrowUpRight, Cpu, BarChart3, Database, G
  */
 export const PROJECTS_DATA = [
   {
-    id: 'traffic-detector',
-    title: 'Real-Time Traffic Intersection Detection API',
-    badge: 'TRAFFIC DETECTOR 2026',
+    id: 'tandoor-web',
+    title: 'Tandoor — Agricultural Equipment Rental Platform',
+    badge: 'TANDOOR WEB 2026',
     year: '2026',
-    category: 'Computer Vision & Edge API',
-    icon: Cpu,
-    stats: '60 FPS Stream • <18ms Inference',
-    description: 'High-throughput computer vision pipeline processing multi-lane urban intersection video feeds with real-time vehicle classification, speed estimation, and traffic density telemetry.',
-    tags: ['FastAPI', 'YOLOv8', 'OpenCV', 'WebSockets', 'Docker', 'Python'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
-    featured: true,
-    visualType: 'vision',
-  },
-  {
-    id: 'maven-analytics',
-    title: 'Maven Roaster Coffee Analytics & Pitch Deck',
-    badge: 'MAVEN ANALYTICS 2026',
-    year: '2026',
-    category: 'Business Intelligence & Data Science',
-    icon: BarChart3,
-    stats: '124K Transactions • +18% Revenue Yield',
-    description: 'Comprehensive retail intelligence platform evaluating customer cohort retention, beverage SKU profitability, and supply-chain forecasting with interactive executive dashboards.',
-    tags: ['Python', 'Pandas', 'Tableau', 'SQL', 'Scikit-Learn', 'Excel'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
-    featured: false,
-    visualType: 'analytics',
-  },
-  {
-    id: 'superstore-bi',
-    title: 'Superstore Sales Visualization Dashboard',
-    badge: 'SUPERSTORE BI 2026',
-    year: '2026',
-    category: 'Enterprise Telemetry & BI',
-    icon: Database,
-    stats: '50+ Key KPIs • Multi-Region Mapping',
-    description: 'Executive geospatial business intelligence portal analyzing logistics bottlenecks, regional profit margin anomalies, and product segment shipping fulfillment times.',
-    tags: ['Pandas', 'Seaborn', 'Tableau', 'PostgreSQL', 'PowerBI'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
-    featured: false,
-    visualType: 'geo',
-  },
-  {
-    id: 'portfolio-site',
-    title: 'Personal Interactive Portfolio Site',
-    badge: 'PORTFOLIO SITE 2026',
-    year: '2026',
-    category: 'Frontend Engineering & Motion',
+    category: 'FULL-STACK / WEB APP',
     icon: Globe,
-    stats: '100 Lighthouse • 60 FPS Spring Lerp',
-    description: 'High-performance digital engineering showcase inspired by modern motorsport aerodynamics, featuring customized spring physics cursor and seamless scroll color transitions.',
-    tags: ['React', 'Tailwind CSS', 'Framer Motion', 'Vite', 'Three.js'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://github.com',
+    stats: 'ONLINE RENTAL • BOOKING SYSTEM',
+    description: 'Platform persewaan alat dan mesin pertanian modern yang memudahkan pengguna memesan peralatan secara online, cepat, transparan, dan efisien.',
+    tags: ['Full-Stack', 'Web App', 'REST API', 'Booking System', 'Vercel'],
+    imageSrc: '/tandoor-preview.jpg',
+    githubUrl: 'https://github.com/HassyaOksigen/Tandoor',
+    liveUrl: 'https://tandoor-zeta.vercel.app/',
+    featured: true,
+    visualType: 'portfolio',
+  },
+  {
+    id: 'unair-library',
+    title: 'UNAIR Library — Campus Digital Library Platform',
+    badge: 'UNAIR LIBRARY 2026',
+    year: '2026',
+    category: 'FULL-STACK / WEB APP',
+    icon: Globe,
+    stats: 'DIGITAL CATALOG • REAL-TIME SEARCH',
+    description: 'Platform perpustakaan digital interaktif mahasiswa Universitas Airlangga untuk eksplorasi katalog buku, pencarian jurnal ilmiah, manajemen peminjaman, serta filter koleksi literatur secara real-time.',
+    tags: ['REACT', 'TAILWIND CSS', 'REST API', 'VERCEL'],
+    imageSrc: '/unair-library-preview.jpg.png',
+    githubUrl: 'https://github.com/HassyaOksigen/Perpustakaan-APSI',
+    liveUrl: 'https://perpustakaan-apsi.vercel.app/login',
+    featured: true,
+    visualType: 'portfolio',
+  },
+  {
+    id: 'aitc-web',
+    title: 'AITC — Interactive Web Fundamentals Hub',
+    badge: 'AITC WEB HUB 2026',
+    year: '2026',
+    category: 'FRONTEND / INTERACTIVE WEB',
+    icon: Globe,
+    stats: 'MATRIX ANIMATION • WEB FUNDAMENTALS',
+    description: 'Platform edukasi web interaktif berbasis animasi Matrix yang menyajikan modul panduan mendalam dan fondasi pengembangan web modern mencakup HTML5, CSS3, dan JavaScript.',
+    tags: ['HTML5', 'CSS3', 'JAVASCRIPT', 'VERCEL'],
+    imageSrc: '/aitc-preview.png',
+    githubUrl: 'https://github.com/HassyaOksigen/AITC-Tugas-1',
+    liveUrl: 'https://project-aitc.vercel.app/',
+    featured: true,
+    visualType: 'portfolio',
+  },
+  {
+    id: 'healthbridge-uiux',
+    title: 'HealthBridge — Connected Healthcare & Teleconsultation Platform',
+    badge: 'HEALTHBRIDGE 2026',
+    year: '2026',
+    category: 'UI/UX DESIGN / HEALTHTECH',
+    icon: Layers,
+    stats: 'FIGMA DESIGN SYSTEM • END-TO-END FLOWS',
+    description: 'Rancangan antarmuka platform kesehatan berbasis Figma yang menghubungkan pasien, dokter, dan relawan medis untuk pemantauan kondisi berkala, pengelolaan rekam medis, serta konsultasi terintegrasi.',
+    tags: ['FIGMA', 'UI/UX DESIGN', 'WIREFRAMING', 'PROTOTYPING', 'DESIGN SYSTEM'],
+    imageSrc: '/healthbridge-preview.png',
+    githubUrl: 'https://www.figma.com/design/C6a5No9qCqtIAYecfzxqHS/Project-HealthBridge?node-id=17-4901&t=QjBsJ1NInleMEqRA-1',
+    liveUrl: 'https://www.figma.com/design/C6a5No9qCqtIAYecfzxqHS/Project-HealthBridge?node-id=17-4901&t=QjBsJ1NInleMEqRA-1',
+    repoLabel: 'INSPECT DESIGN',
+    liveLabel: 'VIEW FIGMA',
+    repoType: 'figma',
     featured: true,
     visualType: 'portfolio',
   },
@@ -247,11 +255,16 @@ function ProjectVisual({ type, title }) {
  */
 export default function ProjectsSection({
   projects = PROJECTS_DATA,
-  title = "SELECTED WORKS",
-  subtitle = "High-throughput systems, real-time computer vision, and telemetry-driven engineering.",
+  title = "PORTFOLIO",
+  subtitle = "A collection of work completed independently and as part of a team.",
 }) {
   const [filter, setFilter] = useState('ALL')
+  const [imgErrors, setImgErrors] = useState({})
   const sectionRef = useRef(null)
+
+  const handleImgError = (id) => {
+    setImgErrors((prev) => ({ ...prev, [id]: true }))
+  }
 
   // ─── SCROLL TRACKING ────────────────────────────────────────────────────────
   // Offset penuh [start end, end start] = siklus masuk dari bawah → fokus → keluar ke atas
@@ -281,13 +294,15 @@ export default function ProjectsSection({
   const subScale   = useTransform(smooth, [0.09, 0.22, 0.74, 0.90], [0.92, 1.0, 1.0, 0.80])
   const subY       = useTransform(smooth, [0.09, 0.24, 0.90],       [28, 0, -28])
 
-  const categories = ['ALL', 'COMPUTER VISION', 'DATA SCIENCE', 'BACKEND']
+  const categories = ['ALL', 'FULL-STACK', 'FRONTEND', 'UI/UX DESIGN', 'BACKEND']
 
   const filteredProjects = projects.filter((item) => {
+    const cat = item.category.toLowerCase()
     if (filter === 'ALL') return true
-    if (filter === 'COMPUTER VISION') return item.category.toLowerCase().includes('vision')
-    if (filter === 'DATA SCIENCE') return item.category.toLowerCase().includes('data') || item.category.toLowerCase().includes('intelligence')
-    if (filter === 'BACKEND') return item.category.toLowerCase().includes('backend') || item.category.toLowerCase().includes('frontend') || item.category.toLowerCase().includes('distributed')
+    if (filter === 'FULL-STACK') return cat.includes('full-stack')
+    if (filter === 'FRONTEND') return cat.includes('frontend') || cat.includes('interactive')
+    if (filter === 'UI/UX DESIGN') return cat.includes('ui/ux') || cat.includes('design')
+    if (filter === 'BACKEND') return cat.includes('backend') || cat.includes('distributed') || cat.includes('full-stack') || cat.includes('telemetry')
     return true
   })
 
@@ -389,6 +404,7 @@ export default function ProjectsSection({
 
         {/* 2. ASYMMETRIC / STAGGERED GRID (3 Columns on Desktop) */}
         <motion.div 
+          key={filter}
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
@@ -407,29 +423,39 @@ export default function ProjectsSection({
                 variants={cardVariants}
                 className={`group interactive-card relative flex flex-col rounded-2xl bg-neutral-900/50 border border-neutral-800/90 overflow-hidden backdrop-blur-md transition-all duration-400 hover:border-[#00ff9d] hover:shadow-[0_12px_45px_rgba(0,255,157,0.18)] hover:-translate-y-2 ${staggerClass}`}
               >
-                {/* Visual Graphic Mockup Preview */}
+                {/* Visual Preview / Screenshot */}
                 <div className="relative w-full h-56 sm:h-64 overflow-hidden bg-neutral-950 border-b border-neutral-800/80">
                   
                   {/* Subtle Corner Telemetry Index */}
-                  <div className="absolute top-3.5 left-4 z-20 flex items-center gap-2 font-mono text-[9px] tracking-widest text-neutral-400 uppercase pointer-events-none select-none">
+                  <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-2.5 py-1 rounded-full bg-neutral-950/75 border border-neutral-800/80 backdrop-blur-sm font-mono text-[9px] tracking-widest text-neutral-300 uppercase pointer-events-none select-none">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shadow-[0_0_6px_#00ff9d]" />
                     <span>REF // 0{idx + 1}</span>
                   </div>
 
-                  {/* Top-Right Quick External Action */}
+                  {/* Top-Right Quick External Action (Live Demo / Repo) */}
                   <a 
-                    href={project.githubUrl} 
+                    href={project.liveUrl || project.githubUrl} 
                     target="_blank" 
-                    rel="noreferrer"
-                    aria-label={`View ${project.title} on GitHub`}
-                    className="absolute top-3 right-3 z-20 p-2 rounded-lg bg-neutral-900/80 border border-neutral-700/80 text-neutral-300 hover:text-white hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 transition-all duration-200"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${project.title}`}
+                    className="interactive-card absolute top-3 right-3 z-20 p-2 rounded-lg bg-neutral-900/85 border border-neutral-700/80 text-neutral-300 hover:text-white hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 transition-all duration-200 backdrop-blur-sm"
                   >
                     <ArrowUpRight className="w-4 h-4 text-neutral-300 group-hover:text-[#00ff9d] transition-colors" />
                   </a>
 
-                  {/* Render Mockup Visual with Scale-up on Hover */}
+                  {/* Render Image Preview or SVG Mockup with Scale-up on Hover */}
                   <div className="w-full h-full transform transition-transform duration-700 ease-out group-hover:scale-105">
-                    <ProjectVisual type={project.visualType} title={project.title} />
+                    {project.imageSrc && !imgErrors[project.id] ? (
+                      <img
+                        src={project.imageSrc}
+                        alt={project.title}
+                        onError={() => handleImgError(project.id)}
+                        className="w-full h-full object-cover object-top"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <ProjectVisual type={project.visualType} title={project.title} />
+                    )}
                   </div>
 
                   {/* Tech Specs Hover Overlay */}
@@ -467,7 +493,7 @@ export default function ProjectsSection({
                     </h3>
 
                     {/* Project Description */}
-                    <p className="mt-3 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed line-clamp-3">
+                    <p className="mt-3 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed line-clamp-4">
                       {project.description}
                     </p>
                   </div>
@@ -487,23 +513,27 @@ export default function ProjectsSection({
                     </div>
 
                     {/* Bottom Action Links */}
-                    <div className="flex items-center justify-between pt-1 text-xs font-mono">
+                    <div className="flex items-center justify-between gap-3 pt-1 text-xs font-mono">
                       <a
                         href={project.githubUrl}
                         target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors uppercase tracking-wider"
+                        rel="noopener noreferrer"
+                        className="interactive-card inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-950/70 text-neutral-300 hover:text-white hover:border-neutral-600 transition-all duration-200 uppercase tracking-wider"
                       >
-                        <Github className="w-3.5 h-3.5" />
-                        <span>Source</span>
+                        {project.repoType === 'figma' ? (
+                          <SiFigma className="w-3.5 h-3.5" />
+                        ) : (
+                          <Github className="w-3.5 h-3.5" />
+                        )}
+                        <span>{project.repoLabel || 'INSPECT REPO'}</span>
                       </a>
                       <a
                         href={project.liveUrl}
                         target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[#00ff9d] hover:text-white hover:underline transition-colors uppercase tracking-wider font-semibold"
+                        rel="noopener noreferrer"
+                        className="interactive-card inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#00ff9d]/30 bg-[#00ff9d]/10 text-[#00ff9d] hover:bg-[#00ff9d] hover:text-neutral-950 hover:shadow-[0_0_15px_rgba(0,255,157,0.45)] transition-all duration-200 uppercase tracking-wider font-semibold"
                       >
-                        <span>Inspect Repo</span>
+                        <span>{project.liveLabel || 'LIVE DEMO'}</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>

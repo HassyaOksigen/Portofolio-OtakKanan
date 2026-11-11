@@ -16,24 +16,18 @@ export default function App() {
       <HeroSection 
         profileImageSrc="/profile.png"
         name="HASSYA"
-        roleTag="DEV // 05"
-        role="Full-Stack / Backend Developer"
-        location="Indonesia"
+        role="Full-Stack Developer"
+        location="Indonesia, Surabaya"
         semester="Semester 5"
-        email="hassya.dev@gmail.com"
-        githubUrl="https://github.com"
-        linkedinUrl="https://linkedin.com"
+        email="hassyaoksigen20@gmail.com"
+        githubUrl="https://github.com/HassyaOksigen"
+        linkedinUrl="https://www.linkedin.com/in/hassyaoksigen"
       />
 
       {/* 2. Transition Section: About & Quote Section */}
       <AboutSection 
-        signatureSrc="/signature.png"
-        quote="ENGINEERED FOR VELOCITY. BUILT FOR SCALE."
-        subquote="Turning complex backend architecture into seamless, high-impact digital experiences."
-        name="HASSYA"
-        role="Full-Stack / Backend Engineer"
-        location="Indonesia"
-        semester="Semester 5"
+        quote="DESIGNED WITH PRECISION. BUILT FOR PERFORMANCE."
+        subquote="Crafting robust backend architectures, real-time data pipelines, and seamless web applications."
       />
 
       {/* 3. Projects Showcase: Helmet Gallery Inspired Asymmetric Grid */}
@@ -42,15 +36,12 @@ export default function App() {
       {/* 4. Technical Stack & System Architecture Section */}
       <TechStackSection />
 
-      {/* 5. Footer Section: Statement, Dual Navigation, Tech Suite, & Telemetry */}
+      {/* 5. Footer Section: Statement, Centered CTA, & Telemetry */}
       <FooterSection 
-        signatureSrc="/signature.png"
-        name="HASSYA"
         semester="Semester 5"
-        email="hassya.dev@gmail.com"
-        githubUrl="https://github.com"
-        linkedinUrl="https://linkedin.com"
-        instagramUrl="https://instagram.com"
+        email="hassyaoksigen20@gmail.com"
+        githubUrl="https://github.com/HassyaOksigen"
+        linkedinUrl="https://www.linkedin.com/in/hassyaoksigen"
       />
     </main>
   )

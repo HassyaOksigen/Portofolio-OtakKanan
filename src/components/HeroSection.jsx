@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import TopographyBackground from './TopographyBackground'
-import Navbar from './Navbar'
-import FloatingInfoCard from './FloatingInfoCard'
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import TopographyBackground from "./TopographyBackground";
+import Navbar from "./Navbar";
+import FloatingInfoCard from "./FloatingInfoCard";
 
 /**
  * HeroSection Component
@@ -17,71 +17,97 @@ import FloatingInfoCard from './FloatingInfoCard'
 export default function HeroSection({
   profileImageSrc = "/profile.png",
   name = "HASSYA",
-  roleTag = "DEV // 05",
-  role = "Full-Stack / Backend Developer",
-  location = "Indonesia",
+  role = "Full-Stack Developer",
+  location = "Indonesia, Surabaya",
   semester = "Semester 5",
-  email = "hassya.dev@gmail.com",
-  githubUrl = "https://github.com",
-  linkedinUrl = "https://linkedin.com",
+  email = "hassyaoksigen20@gmail.com",
+  githubUrl = "https://github.com/HassyaOksigen",
+  linkedinUrl = "https://www.linkedin.com/in/hassyaoksigen",
 }) {
   // Track mouse position for subtle dynamic parallax & spotlight
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 })
-  const [imgError, setImgError] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [imgError, setImgError] = useState(false);
 
   // Direct window scroll tracking - rock solid 100% visibility on initial load
-  const { scrollY } = useScroll()
+  const { scrollY } = useScroll();
 
   // 1. Initial State (scrollY 0 - 80px): 100% visible, fully opaque (1.0), and scaled (1.0)
   // 2. Active Scroll Animation: Elements only begin scaling & fading when user scrolls down
-  const sectionBg = useTransform(scrollY, [80, 480], ['#F5F4F0', '#0a0a0a'])
-  const heroUiOpacity = useTransform(scrollY, [120, 380], [1.0, 0.0])
-  const heroPhotoScale = useTransform(scrollY, [100, 460], [1.0, 0.82])
-  const heroPhotoOpacity = useTransform(scrollY, [120, 420], [1.0, 0.0])
-  const heroPhotoY = useTransform(scrollY, [100, 460], ['0%', '0%'])
+  const sectionBg = useTransform(scrollY, [80, 480], ["#F5F4F0", "#0a0a0a"]);
+  const heroUiOpacity = useTransform(scrollY, [120, 380], [1.0, 0.0]);
+  const heroPhotoScale = useTransform(scrollY, [100, 460], [1.0, 0.82]);
+  const heroPhotoOpacity = useTransform(scrollY, [120, 420], [1.0, 0.0]);
+  const heroPhotoY = useTransform(scrollY, [100, 460], ["0%", "0%"]);
 
   useEffect(() => {
     // Ensure clean initial scroll position on mount
-    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual'
+    if (
+      typeof window !== "undefined" &&
+      "scrollRestoration" in window.history
+    ) {
+      window.history.scrollRestoration = "manual";
     }
 
     const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window
+      const { innerWidth, innerHeight } = window;
       setMousePos({
         x: e.clientX / innerWidth,
         y: e.clientY / innerHeight,
-      })
-    }
+      });
+    };
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   // Parallax subtle shifts for portrait and typography
-  const portraitShiftX = (mousePos.x - 0.5) * -16
-  const portraitShiftY = (mousePos.y - 0.5) * -8
-  const textShiftX = (mousePos.x - 0.5) * 12
+  const portraitShiftX = (mousePos.x - 0.5) * -16;
+  const portraitShiftY = (mousePos.y - 0.5) * -8;
+  const textShiftX = (mousePos.x - 0.5) * 12;
+
+  const floatingNavBadges = [
+    {
+      label: "[ PORTFOLIO ]",
+      href: "#projects",
+      positionClass: "top-[42%] left-1 sm:top-[52%] sm:-left-10 md:-left-16 lg:-left-24",
+      duration: "3.4s",
+      delay: "0s",
+    },
+    {
+      label: "[ ABOUT ]",
+      href: "#about",
+      positionClass: "top-[39%] right-1 sm:top-[48%] sm:-right-8 md:-right-14 lg:-right-20",
+      duration: "3.8s",
+      delay: "0.7s",
+    },
+    {
+      label: "[ TECH STACK ]",
+      href: "#tech-stack",
+      positionClass: "top-[54%] right-1 sm:top-[66%] sm:-right-12 md:-right-20 lg:-right-28",
+      duration: "3.2s",
+      delay: "1.4s",
+    },
+  ];
 
   return (
-    <motion.section 
+    <motion.section
       id="home"
       style={{ backgroundColor: sectionBg }}
       className="relative w-full h-[100dvh] min-h-[640px] text-neutral-900 flex flex-col justify-between select-none cursor-none overflow-visible"
     >
       {/* 1. TOPOGRAPHY & CONTOUR LINES BACKGROUND */}
-      <motion.div style={{ opacity: heroUiOpacity }} className="absolute inset-0 pointer-events-none">
+      <motion.div
+        style={{ opacity: heroUiOpacity }}
+        className="absolute inset-0 pointer-events-none"
+      >
         <TopographyBackground mousePosition={mousePos} />
       </motion.div>
 
       {/* 2. MINIMALIST TOP NAVBAR */}
-      <Navbar 
-        name={name}
-        roleTag={roleTag}
-      />
+      <Navbar name={name} />
 
       {/* GIGANTIC EDITORIAL WATERMARK TYPOGRAPHY (Behind Portrait) */}
-      <motion.div 
+      <motion.div
         style={{
           opacity: heroUiOpacity,
           transform: `translate3d(${textShiftX}px, -50%, 0)`,
@@ -89,32 +115,25 @@ export default function HeroSection({
         className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none z-10 transition-transform duration-700 ease-out"
         aria-hidden="true"
       >
-        <div className="flex flex-col items-center">
-          <span className="font-display text-[15vw] md:text-[17vw] lg:text-[18vw] font-black leading-none tracking-tighter text-neutral-900/[0.045] uppercase">
-            {name}
+        <div className="flex flex-col items-center justify-center w-full px-4">
+          <span className="font-display text-[11vw] sm:text-[11.5vw] lg:text-[12vw] font-black leading-none tracking-tighter whitespace-nowrap text-neutral-900/[0.045] uppercase text-center">
+            DEVELOPER
           </span>
-          <div className="flex items-center gap-6 mt-[-1vw] opacity-30">
-            <span className="h-[1px] w-16 md:w-32 bg-neutral-900" />
-            <span className="font-mono text-xs md:text-sm tracking-[0.3em] uppercase text-neutral-800">
-              05 // MOTORSPORT & ARCHITECTURE
-            </span>
-            <span className="h-[1px] w-16 md:w-32 bg-neutral-900" />
-          </div>
         </div>
       </motion.div>
 
       {/* 3. MAIN PROFILE PHOTO (Grounded & Scaling down on scroll - Center Bottom Alignment) */}
-      <motion.div 
+      <motion.div
         style={{
           scale: heroPhotoScale,
           y: heroPhotoY,
           opacity: heroPhotoOpacity,
-          transformOrigin: 'bottom center',
+          transformOrigin: "bottom center",
         }}
         className="absolute inset-x-0 bottom-0 z-20 pointer-events-none flex items-end justify-center w-full h-full overflow-visible"
       >
         {/* KONTANER FOTO DENGAN HOVER REACTION KURSOR (Center Bottom Alignment - Transparan & Tanpa Border) */}
-        <div 
+        <div
           data-cursor="photo"
           className="relative mx-auto flex items-end justify-center h-[65vh] sm:h-[75vh] md:h-[82vh] lg:h-[88vh] max-h-[92vh] bg-transparent pointer-events-auto cursor-none group overflow-visible"
         >
@@ -130,32 +149,56 @@ export default function HeroSection({
           ) : (
             /* Graceful stylized silhouette fallback jika file custom belum dimasukkan */
             <div className="relative flex flex-col items-center justify-end h-full bg-transparent pointer-events-auto">
-              <svg 
+              <svg
                 className="h-full w-auto text-neutral-800 drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] bg-transparent"
-                viewBox="0 0 500 700" 
+                viewBox="0 0 500 700"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <ellipse cx="250" cy="180" rx="90" ry="110" />
                 <path d="M 120 700 C 130 450, 160 330, 200 300 C 230 320, 270 320, 300 300 C 340 330, 370 450, 380 700 Z" />
-                <path d="M 170 340 L 150 500" stroke="#D4FF00" strokeWidth="6" strokeLinecap="round" />
+                <path
+                  d="M 170 340 L 150 500"
+                  stroke="#D4FF00"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                />
               </svg>
               <div className="absolute bottom-6 bg-neutral-900/90 text-white text-[11px] font-mono px-3 py-1.5 border border-neutral-700 backdrop-blur-md">
                 PLACE YOUR FOTO IN: /public/profile.png
               </div>
             </div>
           )}
+
+          {/* Floating Navigation Badges di Sekitar Bahu & Dada Foto */}
+          {floatingNavBadges.map((nav) => (
+            <div
+              key={nav.href}
+              style={{
+                animationDuration: nav.duration,
+                animationDelay: nav.delay,
+              }}
+              className={`hidden min-[360px]:block absolute z-30 pointer-events-auto animate-[hero-float_3.5s_ease-in-out_infinite] hover:[animation-play-state:paused] ${nav.positionClass}`}
+            >
+              <a
+                href={nav.href}
+                className="interactive-card inline-flex items-center whitespace-nowrap bg-black/80 dark:bg-neutral-950/85 text-neutral-100 border border-neutral-600/80 backdrop-blur-md px-3.5 py-1.5 rounded-lg shadow-lg text-xs md:text-sm font-bold tracking-wider font-mono transition-all duration-300 hover:scale-110 hover:border-emerald-500 hover:text-emerald-400 hover:shadow-emerald-500/30 cursor-pointer"
+              >
+                {nav.label}
+              </a>
+            </div>
+          ))}
         </div>
       </motion.div>
 
       {/* 4. BOTTOM BAR / OVERLAY LAYER (Widget Card + Telemetry & Links) */}
-      <motion.div 
+      <motion.div
         style={{ opacity: heroUiOpacity }}
         className="relative z-20 w-full px-5 pb-5 sm:px-8 sm:pb-8 md:px-12 md:pb-8 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 pointer-events-none"
       >
         {/* Floating Info Card (Sudut Kiri Bawah) */}
         <div className="pointer-events-auto w-full sm:w-auto cursor-none">
-          <FloatingInfoCard 
+          <FloatingInfoCard
             role={role}
             location={location}
             semester={semester}
@@ -189,7 +232,6 @@ export default function HeroSection({
           </a>
         </div>
       </motion.div>
-
     </motion.section>
-  )
+  );
 }

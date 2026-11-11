@@ -7,7 +7,6 @@ import React from 'react'
  */
 export default function Navbar({
   name = "HASSYA",
-  roleTag = "DEV // 05",
 }) {
   return (
     <header className="relative z-30 w-full px-5 py-4 sm:px-8 sm:py-6 md:px-12 md:py-7 flex items-center justify-between">
@@ -19,9 +18,6 @@ export default function Navbar({
         >
           <span className="text-xl sm:text-2xl md:text-3xl font-black tracking-tighter text-neutral-900 uppercase font-display group-hover:opacity-75 transition-opacity">
             {name}
-          </span>
-          <span className="hidden lg:inline-block text-[10px] font-mono tracking-widest text-neutral-500 uppercase">
-            [{roleTag}]
           </span>
         </a>
       </div>
